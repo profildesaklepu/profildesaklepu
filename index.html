@@ -21,14 +21,12 @@
     gap: 10px;
 }
 
-
 .logo {
     width: 60px;
     height: 60px;
     object-fit: contain;
     cursor: pointer;
 }
-
 
 body {
     font-family: 'Segoe UI', sans-serif;
@@ -157,12 +155,6 @@ h2 {
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* ANIMATION */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
 /* RESPONSIVE */
 @media(max-width:768px){
     nav { flex-wrap: wrap; gap: 15px; }
@@ -170,39 +162,59 @@ h2 {
     .card { padding: 20px; width: 100%; }
 }
 
-/* ===================================
-   KONSISTENSI FONT & UKURAN TEKS ISI
-   (KECUALI HEADER)
-=================================== */
-
-/* Semua teks di section konten */
+/* ===============================
+   KONSISTENSI FONT ISI
+================================ */
 .content-section,
 .content-section p,
-.content-section pre,
-.content-section li,
-.content-section span,
-.content-section div {
-    font-family: 'Segoe UI', sans-serif;
+.content-section pre {
     font-size: 16px;
     line-height: 1.7;
-    color: #333;
 }
 
-/* Judul dalam konten */
-.content-section h2,
-.content-section h3,
-.content-section h4 {
-    font-family: 'Segoe UI', sans-serif;
-    font-weight: 600;
+/* ===============================
+   TAMBAHAN TABEL PERANGKAT
+   (TIDAK MENGUBAH YANG LAIN)
+================================ */
+
+.perangkat-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.perangkat-table th,
+.perangkat-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.perangkat-table th {
+    background-color: #f4f7f6;
     color: #2E8B57;
+    font-weight: 600;
 }
 
-/* Khusus teks misi & visi */
-#visi,
-#misi {
-    font-size: 16px;
-    line-height: 1.8;
-    white-space: pre-wrap;
+
+
+.lembaga-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.lembaga-table th,
+.lembaga-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.lembaga-table th {
+    background-color: #f4f7f6;
+    color: #2E8B57;
+    font-weight: 600;
 }
 
 </style>
@@ -217,7 +229,6 @@ h2 {
         <p>Kecamatan Donorojo, Kabupaten Pacitan, Jawa Timur</p>
     </div>
 </header>
-
 
 <nav>
     <a onclick="showSection('tentang')">Tentang</a>
@@ -251,13 +262,36 @@ h2 {
 
 <section id="perangkat" class="content-section">
     <div class="card">
-        <h2>Perangkat Desa</h2>
-        <pre id="perangkatdata">Loading...</pre>
-    </div>
+    <h2>Perangkat Desa</h2>
+    <table class="perangkat-table" id="perangkatTable">
+        <tr>
+            <th>Jabatan</th>
+            <th>Nama</th>
+        </tr>
+    </table>
+</div>
+
+
+
     <div class="card">
-        <h2>Lembaga Desa</h2>
-        <pre id="lembaga">Loading...</pre>
-    </div>
+    <h2>Lembaga Desa</h2>
+
+    <table class="lembaga-table">
+        <thead>
+            <tr>
+                <th>Lembaga</th>
+                <th>Ketua</th>
+            </tr>
+        </thead>
+        <tbody id="lembagaTable">
+            <tr>
+                <td colspan="2">Loading...</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
 </section>
 
 <section id="potensi" class="content-section">
@@ -276,7 +310,6 @@ h2 {
     <div class="dusun-grid" id="dusunGrid">Loading...</div>
 </section>
 
-<!-- LIGHTBOX HTML -->
 <div id="lightbox" onclick="closeLightbox()">
     <img id="lightboxImg">
 </div>
@@ -304,7 +337,6 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/She
 });
 </script>
 
-<!-- SCRIPT DUSUN -->
 <script>
 function openLightbox(src){
     document.getElementById("lightboxImg").src = src;
@@ -322,12 +354,43 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Dus
     data.forEach(dusun => {
         grid.innerHTML += `
             <div class="dusun-card">
-                <img src="${dusun.foto}" alt="${dusun.nama_dusun}" onclick="openLightbox('${dusun.foto}')">
+                <img src="${dusun.foto}" onclick="openLightbox('${dusun.foto}')">
                 <h4>${dusun.nama_dusun}</h4>
             </div>
         `;
     });
 });
+
+fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Lembaga")
+.then(res => res.json())
+.then(data => {
+    const table = document.getElementById("lembagaTable");
+    table.innerHTML = "";
+
+    data.forEach(item => {
+        table.innerHTML += `
+            <tr>
+                <td>${item.lembaga}</td>
+                <td>${item.ketua}</td>
+            </tr>
+        `;
+    });
+});
+
+fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Perangkat")
+.then(res => res.json())
+.then(data => {
+    const table = document.getElementById("perangkatTable");
+    data.forEach(item => {
+        table.innerHTML += `
+            <tr>
+                <td>${item.jabatan}</td>
+                <td>${item.nama}</td>
+            </tr>
+        `;
+    });
+});
+
 </script>
 
 </body>
