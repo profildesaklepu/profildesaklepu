@@ -12,6 +12,23 @@
     box-sizing: border-box;
 }
 
+/* ===============================
+   GLOBAL FONT & UKURAN TEKS
+================================ */
+body,
+p,
+pre,
+td,
+th,
+a,
+li,
+span,
+h4 {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
 /* LOGO */
 .header {
     display: flex;
@@ -29,7 +46,6 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
     background: #f2f4f7;
     color: #333;
 }
@@ -45,6 +61,11 @@ header {
 header h1 {
     font-size: 32px;
     letter-spacing: 1px;
+}
+
+header p {
+    font-size: 16px;
+    opacity: 0.9;
 }
 
 /* NAV */
@@ -102,9 +123,12 @@ nav a:hover {
     white-space: pre-wrap;
 }
 
+/* JUDUL */
 h2 {
     margin-bottom: 15px;
     color: #2E8B57;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 /* GRID DUSUN */
@@ -163,20 +187,8 @@ h2 {
 }
 
 /* ===============================
-   KONSISTENSI FONT ISI
+   TABEL PERANGKAT
 ================================ */
-.content-section,
-.content-section p,
-.content-section pre {
-    font-size: 16px;
-    line-height: 1.7;
-}
-
-/* ===============================
-   TAMBAHAN TABEL PERANGKAT
-   (TIDAK MENGUBAH YANG LAIN)
-================================ */
-
 .perangkat-table {
     width: 100%;
     border-collapse: collapse;
@@ -196,8 +208,9 @@ h2 {
     font-weight: 600;
 }
 
-
-
+/* ===============================
+   TABEL LEMBAGA
+================================ */
 .lembaga-table {
     width: 100%;
     border-collapse: collapse;
@@ -216,7 +229,6 @@ h2 {
     color: #2E8B57;
     font-weight: 600;
 }
-
 </style>
 </head>
 
@@ -262,36 +274,31 @@ h2 {
 
 <section id="perangkat" class="content-section">
     <div class="card">
-    <h2>Perangkat Desa</h2>
-    <table class="perangkat-table" id="perangkatTable">
-        <tr>
-            <th>Jabatan</th>
-            <th>Nama</th>
-        </tr>
-    </table>
-</div>
-
-
+        <h2>Perangkat Desa</h2>
+        <table class="perangkat-table" id="perangkatTable">
+            <tr>
+                <th>Jabatan</th>
+                <th>Nama</th>
+            </tr>
+        </table>
+    </div>
 
     <div class="card">
-    <h2>Lembaga Desa</h2>
-
-    <table class="lembaga-table">
-        <thead>
-            <tr>
-                <th>Lembaga</th>
-                <th>Ketua</th>
-            </tr>
-        </thead>
-        <tbody id="lembagaTable">
-            <tr>
-                <td colspan="2">Loading...</td>
-            </tr>
-        </tbody>
-    </table>
-
-</div>
-
+        <h2>Lembaga Desa</h2>
+        <table class="lembaga-table">
+            <thead>
+                <tr>
+                    <th>Lembaga</th>
+                    <th>Ketua</th>
+                </tr>
+            </thead>
+            <tbody id="lembagaTable">
+                <tr>
+                    <td colspan="2">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 <section id="potensi" class="content-section">
@@ -327,12 +334,8 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/She
 .then(res => res.json())
 .then(data => {
     data.forEach(item => {
-        if(item.bagian === "perangkat"){
-            document.getElementById("perangkatdata").innerText = item.isi;
-        } else {
-            const el = document.getElementById(item.bagian);
-            if(el){ el.innerText = item.isi; }
-        }
+        const el = document.getElementById(item.bagian);
+        if(el){ el.innerText = item.isi; }
     });
 });
 </script>
@@ -366,7 +369,6 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Lem
 .then(data => {
     const table = document.getElementById("lembagaTable");
     table.innerHTML = "";
-
     data.forEach(item => {
         table.innerHTML += `
             <tr>
@@ -390,7 +392,6 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Per
         `;
     });
 });
-
 </script>
 
 </body>
