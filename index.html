@@ -257,7 +257,7 @@ h2 {
     </div>
     <div class="card">
         <h2>Sejarah Singkat Desa</h2>
-        <p id="sejarah">Loading...</p>
+        <p id="sejarah">Loading...</p> 
     </div>
 </section>
 
@@ -302,6 +302,12 @@ h2 {
 </section>
 
 <section id="potensi" class="content-section">
+
+    <div class="card">
+        <h2>Potensi SDM</h2>
+        <pre id="sdm">Loading...</pre>
+    </div>
+
     <div class="card">
         <h2>Potensi SDA</h2>
         <pre id="sda">Loading...</pre>
@@ -315,6 +321,18 @@ h2 {
 <section id="dusun" class="content-section">
     <h2 style="margin-bottom:20px;">Daftar Dusun</h2>
     <div class="dusun-grid" id="dusunGrid">Loading...</div>
+
+    <div class="card">
+        <h2>Data Penduduk per Dusun</h2>
+        <table class="perangkat-table" id="pendudukTable">
+            <tr>
+                <th>Nama Dusun</th>
+                <th>Laki-laki</th>
+                <th>Perempuan</th>
+                <th>Total</th>
+            </tr>
+        </table>
+    </div>
 </section>
 
 <div id="lightbox" onclick="closeLightbox()">
@@ -388,6 +406,21 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Per
             <tr>
                 <td>${item.jabatan}</td>
                 <td>${item.nama}</td>
+            </tr>
+        `;
+    });
+});
+fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/PENDUDUK")
+.then(res => res.json())
+.then(data => {
+    const table = document.getElementById("pendudukTable");
+    data.forEach(item => {
+        table.innerHTML += `
+            <tr>
+                <td>${item["NAMA DUSUN"]}</td>
+                <td>${item["JUMLAH PENDUDUK LAKI-LAKI"]}</td>
+                <td>${item["JUMLAH PENDUDUK PEREMPUAN"]}</td>
+                <td>${item["JUMLAH KESELURUHAN"]}</td>
             </tr>
         `;
     });
