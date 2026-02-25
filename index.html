@@ -298,11 +298,12 @@ h2 {
     <div class="card">
         <h2>Perangkat Desa</h2>
         <table class="perangkat-table" id="perangkatTable">
-            <tr>
-                <th>Jabatan</th>
-                <th>Nama</th>
-            </tr>
-        </table>
+    <tr>
+        <th>Foto</th>
+        <th>Jabatan</th>
+        <th>Nama</th>
+    </tr>
+</table>
     </div>
 
     <div class="card">
@@ -426,8 +427,21 @@ fetch("https://opensheet.elk.sh/1NDp9uTYeRL4S-RYb9FgSuYom8Bm6eIOm5HHcrDkZjQY/Per
     data.forEach(item => {
         table.innerHTML += `
             <tr>
-                <td>${item["Jabatan"]}</td>
-                <td>${item["Nama"]}</td>
+                <td>
+                    <img 
+                        src="perangkat/${item.Foto}" 
+                        onclick="openLightbox('perangkat/${item.Foto}')"
+                        style="
+                            width:60px;
+                            height:60px;
+                            object-fit:cover;
+                            border-radius:8px;
+                            cursor: zoom-in;
+                        "
+                    >
+                </td>
+                <td>${item.Jabatan}</td>
+                <td>${item.Nama}</td>
             </tr>
         `;
     });
