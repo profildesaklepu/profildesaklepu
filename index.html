@@ -229,6 +229,28 @@ h2 {
     color: #2E8B57;
     font-weight: 600;
 }
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#pendudukTable {
+    min-width: 520px;
+    border-collapse: collapse;
+}
+
+#pendudukTable th,
+#pendudukTable td {
+    text-align: center;
+    white-space: nowrap;
+}
+
+#pendudukTable th:first-child,
+#pendudukTable td:first-child {
+    text-align: left;
+}
+
 </style>
 </head>
 
@@ -322,17 +344,16 @@ h2 {
     <h2 style="margin-bottom:20px;">Daftar Dusun</h2>
     <div class="dusun-grid" id="dusunGrid">Loading...</div>
 
-    <div class="card">
-        <h2>Data Penduduk per Dusun</h2>
-        <table class="perangkat-table" id="pendudukTable">
-            <tr>
-                <th>Nama Dusun</th>
-                <th>Laki-laki</th>
-                <th>Perempuan</th>
-                <th>Total</th>
-            </tr>
-        </table>
-    </div>
+    <div class="table-wrapper">
+    <table class="perangkat-table" id="pendudukTable">
+        <tr>
+            <th>Nama Dusun</th>
+            <th>Laki-laki</th>
+            <th>Perempuan</th>
+            <th>Total</th>
+        </tr>
+    </table>
+</div>
 </section>
 
 <div id="lightbox" onclick="closeLightbox()">
